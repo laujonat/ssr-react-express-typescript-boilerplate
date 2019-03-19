@@ -41,7 +41,7 @@ module.exports = {
 - $ source venv/bin/activate 
 
 # You may skip this if using python-dotenv
-- $ export FLASK_APP=exec.py
+- $ export FLASK_APP=main.py
 - $ export FLASK_ENV=development # optional for debug mode
 ```
 
@@ -56,9 +56,12 @@ module.exports = {
 ```bash
 # Run the Flask SSR application from your root directory
 - $ flask run 
+
+# Run client development environment for auto reload
+- $ npm run dev
 ```
 
-Congratulations! You have now successfully set up a Flask application that serves React with Next.js as a SSR application. 🚀
+There you have it, folks. Happy hacking. 🚀
 
 
 
