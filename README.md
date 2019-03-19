@@ -45,7 +45,7 @@ module.exports = {
 - $ export FLASK_ENV=development # optional for debug mode
 ```
 
-### React/Next.js Setup ⚛️⚛︎
+### React/Next.js Setup ⚛️
 ```bash
 # Navigate to the /frontend directory and run the following.
 - $ npm install 
