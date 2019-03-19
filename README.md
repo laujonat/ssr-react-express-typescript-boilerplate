@@ -1,4 +1,4 @@
-# Flask React/Next.js SSR 🛠🚀✴️🐍
+# Flask React/Next.js SSR 🛠🚀✴️🐍 V0.01
 > This is a boilerplate for a Next.js SSR application with Flask server. Unlike CSR applications, your server response to a browser serves a static HTML page ready to be rendered. Next.js is a minimalist React framework solution that supports Server Side rendering and comes with many useful built-in features simplifying the process of deploying a production ready application. 
 
 #### [Flask](http://flask.pocoo.org/) Backend
@@ -61,10 +61,4 @@ module.exports = {
 - $ npm run dev
 ```
 
-There you have it, folks. Happy hacking. 🚀
-
-
-
-
-
-
+Happy hacking. 🚀
