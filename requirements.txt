@@ -11,7 +11,7 @@ MarkupSafe==1.1.0
 Naked==0.1.31
 pycodestyle==2.5.0
 python-dotenv==0.10.1
-PyYAML==3.13
+PyYAML==4.2b1
 requests==2.21.0
 shellescape==3.4.1
 urllib3==1.24.1
