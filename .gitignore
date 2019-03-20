@@ -29,7 +29,7 @@ pip-delete-this-directory.txt
 .venv
 venv/
 
-node_modules
+frondend/node_modules
 .next
 
 # Production Builds
