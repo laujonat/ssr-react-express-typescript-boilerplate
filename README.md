@@ -59,9 +59,10 @@ module.exports = {
 ```bash
 # Run the Flask SSR application from your root directory
 - $ flask run 
-
-# Run client development environment for auto reload
+# Frontend Development build
 - $ npm run dev
+# Frontend Production build as standalone static app 
+- $ npm run export 
 ```
 
 Happy hacking. 🚀
