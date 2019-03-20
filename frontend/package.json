@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/preset-env": "^7.4.1",
     "next": "^8.0.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
