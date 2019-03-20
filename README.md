@@ -11,15 +11,14 @@
 ### Configuration ⚙️
 This boilerplate will deploy your application as a static HTML app.  Flask uses the  `/templates` directory within your Flask directory to serve your static pages.  This is where we will configure Next.js to render our frontend build.  
 **It is recommended you configure a custom build directory.**  
-This boilerplate will build the `.next` in the `/frontend` directory, where our entry file is configured to be `pages/index.js`.
+This boilerplate follows Next.js convention serving our static app files in `/static`, and the main entry file is located at `pages/index.js`.
 [Build Documentation](https://github.com/zeit/next.js#custom-configuration)
 ```js
 module.exports = {
-  exportPathMap: function() {
-    return {
-      '../../app/templates': { page: '/' }
-    }
-  }
+  exportPathMap: () => ({
+    '../../app/templates': { page: '/' }
+  }),
+  distDir: '/static'
 }
 ```
 
@@ -55,13 +54,23 @@ module.exports = {
 - $ npm run export # npm run build && next export. Configure build in next.config.js
 ```
 
-# Run your SSR Application 
+# Deployment
+> Refer to official documentation for development and production builds. [ReferenceA](https://github.com/zeit/next.js/) [ReferenceB](https://nextjs.org/learn/excel/static-html-export/export-the-index-page)
+
+
+# SSR Build
 ```bash
-# Run the Flask SSR application from your root directory
-- $ flask run 
+# Next build
+- $ npm run build
 # Frontend Development build
 - $ npm run dev
-# Frontend Production build as standalone static app 
+```
+
+# Standalone Build
+```bash
+# Next build
+- $ npm run build 
+# Standalone static application withoout the need for a Node server
 - $ npm run export 
 ```
 
