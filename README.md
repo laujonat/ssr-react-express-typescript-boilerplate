@@ -65,7 +65,7 @@ module.exports = {
 # Frontend Development build
 - $ npm run dev
 ```
-# Hotreload 
+# Autoreload 
 > Setting the dev build to the same port as Flask will enable auto reload of the static pages.
 ```js
   "scripts": {
