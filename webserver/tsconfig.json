@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "strict": true,
+        "jsx": "react",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "removeComments": true
+    },
+    "types": [
+        "node"
+    ],
+    "typeRoots": [
+        "./node_modules/@types",
+        "./src/types"
+    ],
+    "exclude": [
+        "./dist"
+    ]
+}

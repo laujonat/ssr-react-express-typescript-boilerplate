@@ -1,19 +1,12 @@
 ### Setup
 ```bash
-# Install python3 (using 3.7)
-- $ brew install python # brew
-
-# Set path 
-- $ export PATH=/usr/local/bin:/usr/local/sbin:$PATH 
-
-# Install pip3
-- $ python -m pip install --user --upgrade pip # pip3
-
 # Install virtualenv (I prefer naming the folder venv)
 - $ python -m venv venv
 
 # Install dependencies from requirements.txt
 - $ pip install -r requirements.txt 
+- $ pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
+
 
 # Initialize your virtualenv 
 - $ source venv/bin/activate 
