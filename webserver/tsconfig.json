@@ -1,13 +1,34 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "sourceMap": true,
+        // Target latest version of ECMAScript.
+        "target": "esnext",
+        // Search under node_modules for non-relative imports.
         "moduleResolution": "node",
+         // Enable strictest settings like strictNullChecks & noImplicitAny.
         "strict": true,
+        // Process & infer types from .js files.
+        "allowJs": true,
+        // Don't emit; allow Babel to transform files.
+        "noEmit": true,
         "jsx": "react",
-        "outDir": "./dist",
+        "outDir": "./build/dist",
+        // Import non-ES modules as default imports.
         "esModuleInterop": true,
         "removeComments": true
+    },
+    "include": [ "client/*"],
+    "exclude": [
+        "node_modules"
+    ],
+    "paths": {
+        "*": [
+            "node_modules/*"
+        ]
     },
     "types": [
         "node"
@@ -15,8 +36,5 @@
     "typeRoots": [
         "./node_modules/@types",
         "./src/types"
-    ],
-    "exclude": [
-        "./dist"
     ]
 }

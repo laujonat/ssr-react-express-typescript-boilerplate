@@ -17,7 +17,7 @@ yarn-error.log*
 .installed.cfg
 *.egg
 
-# Bit code 
+# Bit code
 __pycache__
 backend/*.pyc
 
@@ -29,8 +29,6 @@ pip-delete-this-directory.txt
 .venv
 venv/
 
-frondend/node_modules
-.next
-
-# Production Builds
-frontend/out/*
+webserver/node_modules/**
+webserver/build
+node_modules/

@@ -4,8 +4,8 @@ export default ({ body }: { body: string }) => `
   <head>
     </head>
     <body style="margin:0">
-      <div id="app">${body}</div>
+      <div id="ssr">${body}</div>
     </body>
-    <script src="js/client.js" defer></script>
+    <script src="dist/client.js" defer></script>
   </html>
 `;
