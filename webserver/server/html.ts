@@ -6,6 +6,6 @@ export default ({ body }: { body: string }) => `
     <body style="margin:0">
       <div id="ssr">${body}</div>
     </body>
-    <script src="dist/client.js" defer></script>
+    <script src="build/app.js" defer></script>
   </html>
 `;

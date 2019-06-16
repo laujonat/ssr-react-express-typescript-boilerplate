@@ -15,11 +15,25 @@ Still having some issues with TS transpiling, good luck.
 
 ```
 
-### Flask API 
+### Web Server 
+```bash
+- $ cd webserver && npm install 
+
+# Dev Build 
+- $ npm run start:dev 
+
+# Prod Build
+- $ npm run start
+
+# Debug Dev
+- $ npm run start:debug
+```
+
+### Flask API (python3) 
 ```bash
 # Install virtualenv 
-- $ pip install -r requirements.txt 
-- $ pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
+- $ pip3 install -r requirements.txt 
+- $ pip3 install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
 - $ python -m venv <__dir>
 - $ source venv/bin/activate 
 
@@ -27,9 +41,3 @@ Still having some issues with TS transpiling, good luck.
 - $ export FLASK_APP=main.py
 - $ export FLASK_ENV=development # optional for debug mode
 ```
-
-### Web Server 
-```bash
-- $ cd webserver && npm install 
-```
-

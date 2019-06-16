@@ -1,6 +1,6 @@
 import React from "react";
 import express from "express";
-import Counter from "../client/components/Counter";
+import { HelloWorld } from "../client/components/HelloWorld";
 import { renderToString } from "react-dom/server";
 import html from "./html";
 
@@ -12,7 +12,7 @@ server.use("/server/js/out", express.static("build"));
 server.use("/client/js/out", express.static("build"));
 
 server.get("/", (req, res) => {
-  const body = renderToString(React.createElement(Counter));
+  const body = renderToString(React.createElement(HelloWorld));
 
   res.send(
     html({

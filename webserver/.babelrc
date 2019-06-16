@@ -1,9 +1,16 @@
 {
     "presets": [
-        "@babel/env",
+        [
+            "env",
+            {
+                "modules": false
+            }
+        ],
+        "@babel/preset-react",
         "@babel/preset-typescript"
     ],
     "plugins": [
+        "@babel/plugin-syntax-dynamic-import",
         "@babel/proposal-class-properties",
         "@babel/proposal-object-rest-spread"
     ]

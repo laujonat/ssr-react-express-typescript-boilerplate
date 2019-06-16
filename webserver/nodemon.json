@@ -13,11 +13,13 @@
   "events": {
     "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
   },
-  "watch": [ /* Define additional files to watch */
+  "watch": [ 
+    "server",
+    "client"
   ],
   "env": {
     "NODE_ENV": "development"
   },
-  "exec": "ts-node --inspect ./server/index.ts",
+  "exec": "ts-node ./server/index.ts",
   "ext": "js, ts, tsx, json"
 }
