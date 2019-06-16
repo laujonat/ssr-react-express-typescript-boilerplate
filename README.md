@@ -1,12 +1,12 @@
-# Actualy SSR Typescript React w/ Flask API Boilerplate
+# An Actual SSR Typescript React w/ Flask API Boilerplate
 
-Not reinventing the wheel here, but I had a difficult time finding a version of this without too much fancy configuration going on. 
-This is a SSR Typescript React boilerplate served from an Express web server.  Not fully configured, but Flask would be intended to serve API endpoints. 
+Not reinventing the wheel here, but I had a difficult time finding a SSR solution without fancy configuration. 
+This is a SSR Typescript React boilerplate served from a Express Node web server.  Not fully configured, but Flask would be intended to serve API endpoints. 
 
 
 ### Web server Typescript Compilation:
-1) Output is specified in `tsconfig.json` to build transpiled Javascript into `build/dist`
-2) `server/index.ts` is the server entry file serves static DOM skeleton on compilation
+1) Output is specified in `tsconfig.json`. This will build transpiled Javascript into `build/dist`.
+2) `server/index.ts` is the server entry file and will serve static DOM skeleton on compilation.
 3) `client/index.ts` will render a React component with hydrate `ReactDOM.hydrate` onto the static template file. (You should use React streams)
 
 Still having some issues with TS transpiling, good luck.
