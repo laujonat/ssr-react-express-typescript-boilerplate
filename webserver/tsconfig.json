@@ -1,40 +1,36 @@
 {
     "compilerOptions": {
-        "lib": [
+        "lib": [ /* Declare compiler API declaration groups. */
             "es6",
             "dom"
         ],
-        "sourceMap": true,
-        // Target latest version of ECMAScript.
-        "target": "esnext",
-        // Search under node_modules for non-relative imports.
-        "moduleResolution": "node",
-         // Enable strictest settings like strictNullChecks & noImplicitAny.
-        "strict": true,
-        // Process & infer types from .js files.
-        "allowJs": true,
-        // Don't emit; allow Babel to transform files.
-        "noEmit": true,
-        "jsx": "react",
-        "outDir": "./build/dist",
-        // Import non-ES modules as default imports.
-        "esModuleInterop": true,
-        "removeComments": true
+        "sourceMap": true, /* Generates corresponding '.map' file. */
+        "allowSyntheticDefaultImports": true, /*  Allow default imports from modules with no default export. /*
+        "target": "esnext", /* Target latest version of ECMAScript. */
+        "moduleResolution": "node", /* Search under node_modules for non-relative imports. */
+        "strict": true, /* Enable strictest settings like strictNullChecks & noImplicitAny. */
+        "allowJs": true, /* Process & infer types from .js files. */
+        "noEmit": true, /* Don't emit; allow Babel to transform files. */
+        "jsx": "preserve", /* Keep JSX syntax. */
+        "outDir": "./build", /* Output directory */
+        "esModuleInterop": true, /* Import non-ES modules as default imports. */
+        "removeComments": true /* Do not emit comments to output. */
+        "baseUrl": "./" /* All module imports with non-relative names are assumed to be relative to the baseUrl.*/
     },
-    "include": [ "client/*"],
-    "exclude": [
-        "node_modules"
+    "include": [ "client/*", "server/* "], /*  Defaults to excluding the node_modules, bower_components, jspm_packages and <outDir> directories when [exclude] not specified /*
+    "exclude": [ /* Include test directories here */
+      "node_modules",
+      "build/**/*"
     ],
     "paths": {
-        "*": [
-            "node_modules/*"
+        "*": [ /* Relative to baseUrl declaration. */
+            "node_modules/*" ,
+            "@client/*": ["client/*"], /* import <module> from "@client/<target>" */
+            "@server/*": ["server/*"], /* import <module> from "@server/<target>" */
         ]
     },
-    "types": [
-        "node"
-    ],
-    "typeRoots": [
+    "typeRoots": [ /* Additional type declarations */
         "./node_modules/@types",
-        "./src/types"
+        "./client/types"
     ]
 }

@@ -6,27 +6,40 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 // https://github.com/Roilan/react-server-boilerplate/blob/master/webpack.config.js
 const isProduction = process.env.NODE_ENV === "production";
-const productionPluginDefine = isProduction
+
+const commonPlugins = [
+  new ForkTsCheckerWebpackPlugin(),
+  new TsconfigPathsPlugin({
+    configFile: "./tsconfig.json",
+    compiler: "typescript"
+  })
+];
+
+const productionPlugins = isProduction
   ? [
       new webpack.DefinePlugin({
         "process.env": { NODE_ENV: JSON.stringify("production") }
       })
     ]
-  : [];
+  : [
+      new webpack.DefinePlugin({
+        "process.env": { NODE_ENV: JSON.stringify("development") }
+      })
+    ];
 
-const clientLoaders = isProduction
-  ? productionPluginDefine.concat([
+const clientPlugins = isProduction
+  ? productionLoaders.concat([
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false },
         sourceMap: false
-      }),
-      new ForkTsCheckerWebpackPlugin()
+      })
     ])
   : [];
 
-const commonLoaders = [
+/* Modules  */
+const commonModules = [
   {
     test: /\.json$/,
     loader: "json-loader"
@@ -54,17 +67,19 @@ const ts = {
   }
 };
 
+const mergedModules = commonModules.concat(js, ts);
+
 const serverConfig = {
   mode: "development",
   node: {
     fs: "empty"
   },
-  devtool: "inline-source-map",
+  devtool: "inline-source-map", /* Extract ts source maps from tsconfig. */
   entry: {
     "index.ts": path.resolve(__dirname, "server/index.ts")
   },
   output: {
-    path: path.resolve(__dirname, "./build/dist"),
+    path: path.resolve(__dirname, "./build/server/js/out"),
     filename: "lib.node.js",
     libraryTarget: "commonjs"
   },
@@ -73,9 +88,9 @@ const serverConfig = {
   },
   target: "node",
   module: {
-    rules: [js, ts]
+    rules: mergedModules
   },
-  plugins: productionPluginDefine,
+  plugins: productionPlugins.concat(commonPlugins),
   node: {
     console: false,
     global: false,
@@ -84,32 +99,36 @@ const serverConfig = {
     __filename: false,
     __dirname: false
   },
-  externals: [nodeExternals()]
+  externals: [
+    nodeExternals({
+      react: "React",
+      "react-dom": "ReactDom"
+    })
+  ]
 };
 
 const clientConfig = {
   mode: "development",
   target: "web",
-  devtool: "inline-source-map",
-  node: { 
-    fs: 'empty', 
-    net: 'empty',
-    tls: 'empty',
-    dns: 'empty' 
+  devtool: "inline-source-map", /* Extract ts source maps from tsconfig. */
+  node: {
+    fs: "empty",
+    net: "empty",
+    tls: "empty",
+    dns: "empty"
   },
   entry: {
-    // chunk by pages
     "index.tsx": path.resolve(__dirname, "client/index.tsx")
   },
   module: {
-    rules: [js, ts]
+    rules: mergedModules
   },
-  plugins: clientLoaders,
+  plugins: clientPlugins,
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
   },
   output: {
-    path: path.resolve(__dirname, "./build/dist"),
+    path: path.resolve(__dirname, "./build/client/js/out"),
     filename: "lib.js"
   },
   optimization: {
