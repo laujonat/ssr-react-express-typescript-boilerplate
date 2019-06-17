@@ -10,7 +10,7 @@ export default ({ body, data }: { body: string, data: Object }) => `
     <body style="margin:0">
       <div id="ssr">${body}</div>
     </body>
-    <script src="/static/lib.js"></script>
-    <script src="/static/vendors~index.tsx.lib.js" defer></script>
+    <script src="/static/main.chunk.bundle.js"></script>
+    <script src="/static/index.tsx.chunk.bundle.js"></script>
   </html>
 `;

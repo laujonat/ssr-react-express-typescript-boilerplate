@@ -3,8 +3,7 @@
   "restartable": "rs",
   "ignore": [
     ".git",
-    "node_modules/**/node_modules",
-    "build"
+    "node_modules/**/node_modules"
   ],
   "verbose": true,
   "execMap": {
@@ -14,8 +13,9 @@
     "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
   },
   "watch": [ 
-    "server",
-    "client"
+    "build/", 
+    "server/",
+    "client/"
   ],
   "env": {
     "NODE_ENV": "development"

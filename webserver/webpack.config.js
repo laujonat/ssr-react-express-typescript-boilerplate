@@ -1,14 +1,49 @@
 const webpack = require("webpack");
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+// Code minification
+const TerserPlugin = require("terser-webpack-plugin");
 // Webpack plugin that runs TypeScript type checker on a separate process.
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 // Load modules contained in "paths" in tsconfig.json
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 // https://github.com/Roilan/react-server-boilerplate/blob/master/webpack.config.js
 const isProduction = process.env.NODE_ENV === "production";
+const minify = require("html-minifier").minify;
+// Define custom loading logic without suffering the performance penalty that script-based resource loaders incur. 
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
+// Generate static HTML file on build
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const commonPlugins = [new ForkTsCheckerWebpackPlugin()];
+const env = process.env.NODE_ENV;
+const config = {
+  mode: env || "development"
+};
+
+const commonPlugins = [
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
+  new ForkTsCheckerWebpackPlugin(),
+  new webpack.HashedModuleIdsPlugin(),
+  new HtmlWebpackPlugin({
+    hash: true,
+    meta: {
+      viewport: "width=device-width, initial-scale=1.0",
+      "Content-Security-Policy": {
+        "http-equiv": "Content-Security-Policy",
+        content: ""
+      },
+      template: "./server.html.ts",
+      minify: {
+        collapseWhitespace: true,
+        collapseWhitespace: true,
+        removeComments: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      }
+    }
+  })
+];
 
 const tsPaths = [
   new TsconfigPathsPlugin({
@@ -30,21 +65,20 @@ const productionPlugins = isProduction
     ];
 
 const clientPlugins = isProduction
-  ? productionLoaders.concat([
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false },
-        sourceMap: false
-      })
-    ])
+  ? productionPlugins.concat([new webpack.optimize.OccurrenceOrderPlugin()])
   : [];
 
 /* Modules  */
 const commonModules = [
   {
     test: /\.json$/,
+    type: "javascript/auto",
     loader: "json-loader"
+  },
+  {
+    test: /\.s(a|c)ss$/,
+    exclude: /\.module.(s(a|c)ss)$/,
+    loader: `style!css`
   }
 ];
 
@@ -72,7 +106,7 @@ const ts = {
 const mergedModules = commonModules.concat(js, ts);
 
 const serverConfig = {
-  mode: "development",
+  mode: config.mode,
   node: {
     fs: "empty"
   },
@@ -87,9 +121,10 @@ const serverConfig = {
     "index.ts": path.resolve(__dirname, "server/index.ts")
   },
   output: {
-    path: path.resolve(process.cwd(), "build"),
-    filename: "lib.node.js",
-    libraryTarget: "commonjs"
+    path: path.resolve(process.cwd(), "build/js"),
+    filename: "[name].[chunk].bundle.js",
+    chunkFilename: "[id].[chunkhash:4].bundle.js",
+    libraryTarget: "umd"
   },
   resolve: {
     plugins: tsPaths,
@@ -99,15 +134,13 @@ const serverConfig = {
   module: {
     rules: mergedModules
   },
-  plugins: productionPlugins.concat(commonPlugins),
-  node: {
-    console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false
+  performance: {
+    hints: "warning",
+    assetFilter: function (assetFilename) {
+      return assetFilename.endsWith(".js");
+    }
   },
+  plugins: productionPlugins.concat(commonPlugins),
   externals: [
     nodeExternals({
       react: "React",
@@ -117,9 +150,8 @@ const serverConfig = {
 };
 
 const clientConfig = {
-  mode: "development",
+  mode: config.mode,
   target: "web",
-  devtool: "inline-source-map" /* Extract ts source maps from tsconfig. */,
   node: {
     fs: "empty",
     net: "empty",
@@ -137,7 +169,15 @@ const clientConfig = {
   },
   output: {
     path: path.resolve(process.cwd(), "build"),
-    filename: "lib.js"
+    filename: "[name].[chunk:4].bundle.js",
+    chunkFilename: "[id].[chunkhash:4].bundle.js",
+    libraryTarget: "umd"
+  },
+  performance: {
+    hints: "warning",
+    assetFilter: function(assetFilename) {
+      return assetFilename.endsWith(".js");
+    }
   },
   module: {
     rules: mergedModules
@@ -148,8 +188,27 @@ const clientConfig = {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
   },
   optimization: {
+    runtimeChunk: "single",
     splitChunks: {
-      chunks: "all"
+      chunks: "all",
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${packageName.replace("@", "")}`;
+          },
+          enforce: true,
+          reuseExistingChunk: true
+        }
+      }
     }
   }
 };
