@@ -1,12 +1,8 @@
-import * as React from "react";
+import React from "react";
+import { IHelloWorldProps } from '../types/index';
 
-interface HelloWorldProps {
-  Title?: string;
-  Content: string;
-}
-
-export const HelloWorld: React.FC<HelloWorldProps> = ({ Content, Title }) => {
+export const HelloWorld: React.FC<IHelloWorldProps<Object>> = ({ data }) => {
   return (
-    <div>{Content}</div>
+    <div>Initial data served by server: {data}</div>
   )
-  }
+}

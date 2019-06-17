@@ -1,26 +1,24 @@
 import React from "react";
 import express from "express";
+import path from "path";
 import { HelloWorld } from "../client/components/HelloWorld";
 import { renderToString } from "react-dom/server";
 import html from "./html";
 
-const port = 8000;
-const server = express();
+const port: number = 8000;
+const server: express.Application = express();
 
-// server.use(helmet());
-server.use("/server/js/out", express.static("build"));
-server.use("/client/js/out", express.static("build"));
+server.use("/static", express.static(path.resolve(__dirname, "..", "build")));
 
 server.get("/", (req, res) => {
-  const body = renderToString(React.createElement(HelloWorld));
-
-  res.send(
-    html({
-      body
-    })
-  );
+  const body: string = renderToString(React.createElement(HelloWorld));
+  const data: Object = { data: {
+    0: "SSR Express + TypeScript"
+  }};
+  
+  res.send( html({ body, data }));
 });
 
 server.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`)
+  console.log(`Listening on port: ${port}`)
 );
