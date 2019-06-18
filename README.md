@@ -1,19 +1,15 @@
-# An Actual SSR Typescript React w/ Flask API Boilerplate
+# (Works) SSR Typescript React w/ Flask API Boilerplate
 
 Not reinventing the wheel here, but I had a difficult time finding a SSR solution without fancy configuration. 
 This is a SSR Typescript React boilerplate served from a Express Node web server.  Not fully configured, but Flask would be intended to serve API endpoints. 
 
-
 ### Web server Typescript Compilation:
-1) Output is specified in `tsconfig.json`. This will build transpiled Javascript into `build/dist`.
-2) `server/index.ts` is the server entry file and will serve static DOM skeleton on compilation.
+1) Output is specified in `tsconfig.json`. This will build transpiled Javascript into the template in `dist/`.
+2) `server/index.ts` is the server entry file and will serve static DOM skeleton on compilation. `window.INIT_DATA` is defined and replaced upon server render with the initial data for fast loading. 
 3) `client/index.ts` will render a React component with hydrate `ReactDOM.hydrate` onto the static template file. (You should use React streams)
+4) You can verify this is SSR by checking `data-reactroot` rendered into the DOM tree.
 
-Still having some issues with TS transpiling, good luck.
-```
-- $ export NODE_OPTIONS=--max_old_space_size=4096
-
-```
+Note, this is still a pretty shabby solution. 
 
 ### Web Server 
 ```bash

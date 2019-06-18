@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+
 // Code minification
 const TerserPlugin = require("terser-webpack-plugin");
 // Webpack plugin that runs TypeScript type checker on a separate process.
@@ -21,6 +23,11 @@ const config = {
 };
 
 const commonPlugins = [
+  new BundleAnalyzerPlugin({
+    analyzerMode: 'disabled',
+    generateStatsFile: true,
+    statsOptions: { source: false }
+  }),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new ForkTsCheckerWebpackPlugin(),
@@ -112,8 +119,6 @@ const serverConfig = {
   },
   stats: {
     colors: true,
-    modules: true,
-    reasons: true,
     errorDetails: true
   },
   devtool: "inline-source-map" /* Extract ts source maps from tsconfig. */,
@@ -135,10 +140,10 @@ const serverConfig = {
     rules: mergedModules
   },
   performance: {
-    hints: "warning",
-    assetFilter: function (assetFilename) {
-      return assetFilename.endsWith(".js");
-    }
+    hints: "warning"
+    // assetFilter: function (assetFilename) {
+    //   return assetFilename.endsWith(".js");
+    // }
   },
   plugins: productionPlugins.concat(commonPlugins),
   externals: [
@@ -160,8 +165,6 @@ const clientConfig = {
   },
   stats: {
     colors: true,
-    modules: true,
-    reasons: true,
     errorDetails: true
   },
   entry: {
@@ -174,10 +177,7 @@ const clientConfig = {
     libraryTarget: "umd"
   },
   performance: {
-    hints: "warning",
-    assetFilter: function(assetFilename) {
-      return assetFilename.endsWith(".js");
-    }
+    hints: "warning"
   },
   module: {
     rules: mergedModules
