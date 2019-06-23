@@ -12,6 +12,15 @@
     "plugins": [
         "@babel/plugin-syntax-dynamic-import",
         "@babel/proposal-class-properties",
-        "@babel/proposal-object-rest-spread"
+        "@babel/proposal-object-rest-spread",
+        "@babel/plugin-transform-arrow-functions",
+        [
+            "styled-components",
+            {
+                "ssr": true,
+                "displayName": true,
+                "preprocess": false
+            }
+        ]
     ]
 }

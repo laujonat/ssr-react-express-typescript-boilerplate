@@ -16,22 +16,18 @@
         "outDir": "./build", /* Output directory */
         "esModuleInterop": true, /* Import non-ES modules as default imports. */
         "removeComments": true, /* Do not emit comments to output. */
-        "baseUrl": "./" /* All module imports with non-relative names are assumed to be relative to the baseUrl.*/
+        "baseUrl": "./", /* All module imports with non-relative names are assumed to be relative to the baseUrl.*/
+        "skipLibCheck": true  /* Needed for styled-components */
     },
-    "include": [ "client/**/*", "server/**/* "], 
+    "include": [ "src/**/*" ], 
     "exclude": [ 
       "node_modules"
     ],
     "paths": {
-        "@client/*": [
-            "client/*"
-        ],
-        "@server/*": [
-            "server/*"
-        ],
-        "*": [
-            "node_modules/*"
-        ]
+        "@src/components/*": [ "./src/components/*" ],
+        "@src/*": [ "src/*" ],
+        "@server/*": [ "src/server/*" ],
+        "*": [ "node_modules/*" ]
     },
     "types": [
         "express",
@@ -39,10 +35,11 @@
         "react",
         "react-dom",
         "prop-types",
+        "styled-components",
         "terser-webpack-plugin"
     ],
     "typeRoots": [
         "./node_modules/@types",
-        "./client/types"
+        "./src/types/"
     ]
 }
