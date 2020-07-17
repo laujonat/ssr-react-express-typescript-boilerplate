@@ -9,7 +9,7 @@
     "express": "^4.17.1",
     "html-minifier": "^4.0.0",
     "jest-styled-components": "^6.3.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "react": "^16.8.6",
     "styled-reset": "^2.0.16",
     "uglify-js": "^3.6.0"
