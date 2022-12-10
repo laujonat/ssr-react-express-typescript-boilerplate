@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/react": "^16.8.20",
     "@types/styled-components": "^4.1.16",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "html-minifier": "^4.0.0",
     "jest-styled-components": "^6.3.3",
     "lodash": "^4.17.11",
